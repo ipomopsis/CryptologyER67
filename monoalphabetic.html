@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      h1 {
+        color: #D6D6C2;
+        font-size: 65px;
+        position: relative;
+        top: 30%;
+        left: 30%;
+      }
+
+      .heading {
+        height: 300px;
+        background-image: url("http://imgfave-herokuapp-com.global.ssl.fastly.net/image_cache/1349931450710438.jpg");
+        background-repeat: no-repeat;
+        background-size:cover;
+      }
+
+      .mainarea {
+        background-color: #D6D6C2;
+        padding: 10px;
+        color: #2E2E1F;
+        font-family: monospace;
+        font-size: 18px;
+      }
+
+      h3 {
+        font-size: 25px;
+      }
+
+      h6 {
+        font-size: 18px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="heading">
+      <h1>Monoalphabetic Cipher</h1>
+    </div>
+
+    <div class="mainarea">
+      <h3>Encrypt/Decrypt</h3>
+
+      <h6>Key</h6>
+      <h6>A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z</H6>
+      <div class="keys">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+        <input type="text" id="key" size="1">
+      </div>
+
+      <h6>Message/Ciphertext</h6>
+      <textarea id="ciphertext"></textarea>
+
+      <input type="button" id="encrypt" name="function" value="encrypt">
+      <input type="button" id="decrypt" name="function" value="decrypt">
+
+      <h6>Ciphertext/Message</h6>
+      <div class="messagetext">
+      </div>
+
+      <h3>Finding the Key- Frequency Analysis</h3>
+      <textarea id="ciphertexttodecrypt"></textarea>
+
+      <h6>Frequency Table</h6>
+      <div class="freqtable">
+      </div>
+
+      <h6>Frequency Graph</h6>
+      <div class="freqgraph">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+
+
+      <h6>English Language Frequency Graph</h6>
+      <div class="engfreqgraph">
+      </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.com/libraries/chart.js"></script>
+    <script>
+      function mod(x, y) {
+        var z = x % y;
+        if (z < 0) {
+          return z + y;
+        } else {
+          return z;
+        }
+      }
+
+      $("#decrypt").click(function() {
+        var data = {
+          labels: ["A", "B", "C", "D", "E"],
+          datasetS: [
+            {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.5)",
+            strokeColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 86, 27, 90]
+            }
+          ]}
+        var myBarChart = new Chart(ctx).Bar(data, options);
+        $("#myChart").myBarChart;
+      });
+
+    </script>
+  </body>
+</html>

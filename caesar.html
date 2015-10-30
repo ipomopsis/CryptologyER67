@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      h1 {
+        color: #D6D6C2;
+        font-size: 65px;
+        position: relative;
+        top: 30%;
+        left: 30%;
+      }
+
+      .heading {
+        height: 300px;
+        background-image: url("http://imgfave-herokuapp-com.global.ssl.fastly.net/image_cache/1349931450710438.jpg");
+        background-repeat: no-repeat;
+        background-size:cover;
+      }
+
+      .mainarea {
+        background-color: #D6D6C2;
+        padding: 10px;
+        color: #2E2E1F;
+        font-family: monospace;
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 25px;
+      }
+
+      .ciphershiftinput {
+        display: inline;
+      }
+
+    </style>
+
+    <link href="#" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="heading">
+      <h1>Caesar Cipher</h1>
+    </div>
+
+    <div class="mainarea">
+      <h3>Cipher Disk</h3>
+
+      <div class="ciphershiftinput">
+        <h3>Shift:</h3>
+        <input type="text" id="ciphershift" size="2">
+      </div>
+
+      <div id="cipherdisk">
+      </div>
+
+      <h3>Encrypt/Decrypt - Known Key</h3>
+
+      <textarea id="ciphertext"></textarea>
+
+      <input type="text" id="decryptionshift" size="2">
+
+      <input type="button" id="encrypt" name="function" value="encrypt">
+      <input type="button" id="decrypt" name="function" value="decrypt">
+
+      <div id="plaintext">
+      </div>
+
+      <h3>Finding the Key - Brute Force</h3>
+
+      <textarea id="ciphertext2"></textarea>
+
+      <input type="text" id="characters" size="4">
+
+      <div id="bruteforce">
+      </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+      function mod(x, y) {
+        var z = x % y;
+        if (z < 0) {
+          return z + y;
+        } else {
+          return z;
+        }
+      }
+
+
+      $("#cipherdisk").text("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+      $("#ciphershift").on("keyup", function() {
+        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>";
+        var shift = parseInt($("#ciphershift").val(), 10);
+
+        for (var i = 0; i < 26; i++) {
+          var character = String.fromCharCode(65 + mod(i - shift, 26));
+          alphabet = alphabet + character;
+        }
+
+        $("#cipherdisk").html(alphabet);
+      });
+
+
+      $("#encrypt").click(function() {
+        var text = $("#ciphertext").val();
+        var upper = text.toUpperCase();
+        var length = text.length;
+        var outtext = "Message: <br>";
+        var shift = parseInt($("#decryptionshift").val(), 10);
+
+        for (var i = 0; i < length; i++) {
+          var number = upper.charCodeAt(i) - 65;
+          var character = String.fromCharCode(65 + mod(number + shift, 26));
+          if (number >= 0) {
+            if (number < 26) {
+              outtext = outtext + character;}
+            else {
+              outtext = outtext + " ";}
+          }
+          else {
+            outtext = outtext + " ";}
+        }
+        $("#plaintext").html(outtext);
+      });
+
+
+      $("#decrypt").click(function() {
+        var text = $("#ciphertext").val();
+        var upper = text.toUpperCase();
+        var length = text.length;
+        var outtext = "Message: <br>";
+        var shift = parseInt($("#decryptionshift").val(), 10);
+
+        for (var i = 0; i < length; i++) {
+          var number = upper.charCodeAt(i) - 65;
+          var character = String.fromCharCode(65 + mod(number - shift, 26));
+          if (number >= 0) {
+            if (number < 26) {
+              outtext = outtext + character;}
+            else {
+              outtext = outtext + " ";}
+          }
+          else {
+            outtext = outtext + " ";}
+        }
+        $("#plaintext").html(outtext);
+      });
+
+
+      $("#bruteforce").text("Possible Messages:");
+      $("#characters").val("50");
+      $("#ciphertext2").on("keyup", function() {
+        var text = $("#ciphertext2").val();
+        var upper = text.toUpperCase();
+        var length = parseInt($("#characters").val(), 10);
+        var outtext = "Possible Messages:";
+
+        for (var i = 0; i < 26; i++) {
+          var shift = i + 1;
+          outtext = outtext + "<br> Key = " + shift + ": ";
+
+          for (var j = 0; j < length; j++) {
+            var number = upper.charCodeAt(j) - 65;
+            var character = String.fromCharCode(65 + mod(number + shift, 26));
+            if (number >= 0) {
+              if (number < 26) {
+                outtext = outtext + character;}
+              else {
+                outtext = outtext + " ";}
+            }
+            else {
+              outtext = outtext + " ";}
+          }
+        }
+        $("#bruteforce").html(outtext);
+      });
+
+    </script>
+  </body>
+</html>
