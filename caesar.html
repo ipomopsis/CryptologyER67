@@ -102,50 +102,43 @@
         $("#cipherdisk").html(alphabet);
       });
 
-
-      $("#encrypt").click(function() {
-        var text = $("#ciphertext").val();
+      function cipher(text, shift) {
         var upper = text.toUpperCase();
-        var length = text.length;
-        var outtext = "Message: <br>";
-        var shift = parseInt($("#decryptionshift").val(), 10);
+        var outtext = "";
 
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < text.length; i++) {
           var number = upper.charCodeAt(i) - 65;
           var character = String.fromCharCode(65 + mod(number + shift, 26));
-          if (number >= 0) {
-            if (number < 26) {
-              outtext = outtext + character;}
-            else {
-              outtext = outtext + " ";}
+          if (number >= 0 && number < 26) {
+            outtext = outtext + character;
+          } else {
+            outtext = outtext + " ";
           }
-          else {
-            outtext = outtext + " ";}
         }
+
+        return outtext;
+      }
+
+      function runFullCipher(direction) {
+        var text = $("#ciphertext").val();
+        var shift = parseInt($("#decryptionshift").val(), 10);
+
+        if(direction === 'decrypt') {
+          shift = -shift;
+        }
+
+        var outtext = "Message: <br>" + cipher(text, shift)
+
         $("#plaintext").html(outtext);
+      }
+
+      $("#encrypt").click(function() {
+        runFullCipher('encrypt');
       });
 
 
       $("#decrypt").click(function() {
-        var text = $("#ciphertext").val();
-        var upper = text.toUpperCase();
-        var length = text.length;
-        var outtext = "Message: <br>";
-        var shift = parseInt($("#decryptionshift").val(), 10);
-
-        for (var i = 0; i < length; i++) {
-          var number = upper.charCodeAt(i) - 65;
-          var character = String.fromCharCode(65 + mod(number - shift, 26));
-          if (number >= 0) {
-            if (number < 26) {
-              outtext = outtext + character;}
-            else {
-              outtext = outtext + " ";}
-          }
-          else {
-            outtext = outtext + " ";}
-        }
-        $("#plaintext").html(outtext);
+        runFullCipher('decrypt');
       });
 
 
@@ -153,27 +146,16 @@
       $("#characters").val("50");
       $("#ciphertext2").on("keyup", function() {
         var text = $("#ciphertext2").val();
-        var upper = text.toUpperCase();
         var length = parseInt($("#characters").val(), 10);
         var outtext = "Possible Messages:";
 
+        text = text.slice(0, length);
+
         for (var i = 0; i < 26; i++) {
           var shift = i + 1;
-          outtext = outtext + "<br> Key = " + shift + ": ";
-
-          for (var j = 0; j < length; j++) {
-            var number = upper.charCodeAt(j) - 65;
-            var character = String.fromCharCode(65 + mod(number + shift, 26));
-            if (number >= 0) {
-              if (number < 26) {
-                outtext = outtext + character;}
-              else {
-                outtext = outtext + " ";}
-            }
-            else {
-              outtext = outtext + " ";}
-          }
+          outtext = outtext + "<br> Key = " + shift + ": " + cipher(text, -shift);
         }
+
         $("#bruteforce").html(outtext);
       });
 
