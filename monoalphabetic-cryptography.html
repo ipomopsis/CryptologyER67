@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      h1 {
+        color: #D6D6C2;
+        font-size: 65px;
+        position: relative;
+        top: 30%;
+        left: 30%;
+      }
+
+      .heading {
+        height: 300px;
+        background-image: url("http://imgfave-herokuapp-com.global.ssl.fastly.net/image_cache/1349931450710438.jpg");
+        background-repeat: no-repeat;
+        background-size:cover;
+      }
+
+      .mainarea {
+        background-color: #D6D6C2;
+        padding: 10px;
+        color: #2E2E1F;
+        font-family: monospace;
+        font-size: 18px;
+      }
+
+      h3 {
+        font-size: 25px;
+      }
+
+      h6 {
+        font-size: 18px;
+      }
+
+      .key-entry {
+        display: inline-block;
+        padding: 2px;
+        text-align: center;
+      }
+
+      .key-entry span {
+        display: block;
+        font-size: 18px;
+      }
+
+      .key-entry input {
+        width: 1.2em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .freqgraph {
+        width: 400px;
+        height: 400px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="heading">
+      <h1>Monoalphabetic Cipher<br>Cryptography</h1>
+    </div>
+
+    <div class="mainarea">
+      <h3>Encrypt/Decrypt</h3>
+
+      <h6>Key</h6>
+      <div id="key"></div>
+
+      <h6>
+        Message/Ciphertext:
+        <textarea id="ciphertext"></textarea>
+      </h6>
+
+      <input type="button" id="encrypt" name="function" value="encrypt">
+      <input type="button" id="decrypt" name="function" value="decrypt">
+
+      <h6>
+        Ciphertext/Message:
+      </h6>
+
+      <div id="messagetext">
+      </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+    <script>
+      function mod(x, y) {
+        var z = x % y;
+        if (z < 0) {
+          return z + y;
+        } else {
+          return z;
+        }
+      }
+
+      // Build the Key
+      for (var i = 0; i < 26; i++) {
+        var char = String.fromCharCode(65 + i);
+
+        $('<div class="key-entry"><span>' + char + '</span><input type="text" size="1" maxlength="1" data-char="' + char + '"></div>').appendTo('#key');
+      }
+
+      function getEncryptionKey() {
+        var key = {};
+
+        $('.key-entry input').each(function() {
+          var input = $(this);
+          key[input.data('char')] = input.val().toUpperCase();
+        });
+
+        return key;
+      }
+
+      function getDecryptionKey() {
+        var key = {};
+
+        $('.key-entry input').each(function() {
+          var input = $(this);
+          key[input.val().toUpperCase()] = input.data('char');
+        });
+
+        return key;
+      }
+
+      // Run Encryption
+      $("#encrypt").click(function() {
+        var mtext = "";
+        var text = $("#ciphertext").val();
+        var uppercase = text.toUpperCase();
+        var length = text.length;
+        var nextchar = "";
+        var key = getEncryptionKey();
+        var num = 0;
+
+        for (var i = 0; i < length; i++) {
+          num = uppercase.charCodeAt(i);
+          if (num >= 65 && num <= 90) {
+            nextchar = key[uppercase[i]] || "?";
+          }
+          else {
+            nextchar = " "
+          }
+          mtext = mtext + nextchar;
+        }
+
+        $("#messagetext").html(mtext);
+      });
+
+      // Run Decryption
+      $("#decrypt").click(function() {
+        var mtext = "";
+        var text = $("#ciphertext").val();
+        var uppercase = text.toUpperCase();
+        var length = text.length;
+        var nextchar = "";
+        var key = getDecryptionKey();
+        var num = 0;
+
+        for (var i = 0; i < length; i++) {
+          num = uppercase.charCodeAt(i);
+          if (num >= 65 && num <= 90) {
+            nextchar = key[uppercase[i]] || "?";
+          }
+          else {
+            nextchar = " "
+          }
+          mtext = mtext + nextchar;
+        }
+
+        $("#messagetext").html(mtext);
+      });
+
+    </script>
+  </body>
+</html>

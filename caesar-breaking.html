@@ -29,6 +29,10 @@
         font-size: 25px;
       }
 
+      h6 {
+        font-size: 20px;
+      }
+
       .ciphershiftinput {
         display: inline;
       }
@@ -40,37 +44,21 @@
   <body>
 
     <div class="heading">
-      <h1>Caesar Cipher</h1>
+      <h1>Caesar Cipher<br>Codebreaking</h1>
     </div>
 
     <div class="mainarea">
-      <h3>Cipher Disk</h3>
-
-      <div class="ciphershiftinput">
-        <h3>Shift:</h3>
-        <input type="text" id="ciphershift" size="2">
-      </div>
-
-      <div id="cipherdisk">
-      </div>
-
-      <h3>Encrypt/Decrypt - Known Key</h3>
-
-      <textarea id="ciphertext"></textarea>
-
-      <input type="text" id="decryptionshift" size="2">
-
-      <input type="button" id="encrypt" name="function" value="encrypt">
-      <input type="button" id="decrypt" name="function" value="decrypt">
-
-      <div id="plaintext">
-      </div>
-
       <h3>Finding the Key - Brute Force</h3>
 
-      <textarea id="ciphertext2"></textarea>
+      <h6>
+        Ciphertext:
+        <textarea id="ciphertext2"></textarea>
+      </h6>
 
-      <input type="text" id="characters" size="4">
+      <h6>
+        Number of Characters:
+        <input type="text" id="characters" size="4">
+      </h6>
 
       <div id="bruteforce">
       </div>
