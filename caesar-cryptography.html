@@ -96,7 +96,7 @@
         var shift = parseInt($("#ciphershift").val(), 10);
 
         for (var i = 0; i < 26; i++) {
-          var character = String.fromCharCode(65 + mod(i - shift, 26));
+          var character = String.fromCharCode(65 + mod(i + shift, 26));
           alphabet = alphabet + character;
         }
 
